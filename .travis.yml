@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- lts/boron
+- node
+after_success: bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: QeQfflMa+5jDcU1rTUpFjbcfuYBX6ViBVnP3rKp0qafSJmggG6fIAC1ancE2eUecU2FhjAPN1VKmOLa1+J+Lga+F0X1Jy8FgPq4IBDlJ9QvlMkDxfdeoe7LR0RfJcp3IEfJTn/7NJ7hLqXdZNxhvcoKplS2nAtMYWx+uPJWVymdriAfFE551WF+3KTRHeUeQFqnHEnXNjx8thkxbMRMKBTe/U0svo3nUKLJ1M9WOAhsZrByERvV+nFK/XK3keMMZzIs9hadw7OU1EGtpiqA/HApPWSGd5I2aq3fqxjbwHzrJr2KZG61lJeyVoypRGZgPNKlHXy3xxLKWQ6GD4bySu0dke0dZfxzrJOEd7lx45qkaMsb5uwQdbXjnqnkFc/I6xesTCFdl7SdhfwfyH+mPNVMI2o8nOJ3Ud5Am2QycIfuc6r/E/Cx1PiH9+TwmKjtoD9gW15+9Pzjdg9W0IFWysk8c8jWyVawhwoM3fvTvfTfIJJ7uM92aS8S5ReAQfa6sNtRjAluig+7kwausElckTPchOxQbgW4n3NgBV8dP987U5l9PsUOXaMQ9efO9BVg97BqIKSDU+c5lH5wKirG4GkjPK7THIYZUHdRgMbH3ladNoI8RegVP3FG95ZdxfWsx4JCs2qxUSgtgRw0WR4e48MNIDdtquIUTGMntyM7TUp4=
+  file:
+    - "bcp-47-match.js"
+    - "bcp-47-match.min.js"
+  on:
+    tags: true
+    node: 'node'

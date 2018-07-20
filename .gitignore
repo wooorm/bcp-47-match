@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+.nyc_output/
+coverage/
+node_modules/
+bcp-47-match.js
+bcp-47-match.min.js
+yarn.lock

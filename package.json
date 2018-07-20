@@ -1,0 +1,72 @@
+{
+  "name": "bcp-47-match",
+  "version": "0.0.0",
+  "description": "Match BCP 47 language tags with language ranges per RFC 4647",
+  "license": "MIT",
+  "keywords": [
+    "bcp",
+    "47",
+    "bcp47",
+    "bcp-47",
+    "language",
+    "tag",
+    "match",
+    "matching",
+    "check",
+    "rfc",
+    "4647"
+  ],
+  "repository": "wooorm/bcp-47-match",
+  "bugs": "https://github.com/wooorm/bcp-47-match/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "browserify": "^16.0.0",
+    "chalk": "^2.4.1",
+    "nyc": "^12.0.0",
+    "prettier": "^1.11.0",
+    "remark-cli": "^5.0.0",
+    "remark-preset-wooorm": "^4.0.0",
+    "tape": "^4.0.0",
+    "tinyify": "^2.4.3",
+    "xo": "^0.21.0"
+  },
+  "scripts": {
+    "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
+    "build-bundle": "browserify index.js -s bcp47Match > bcp-47-match.js",
+    "build-mangle": "browserify index.js -s bcp47Match -p tinyify > bcp-47-match.min.js",
+    "build": "npm run build-bundle && npm run build-mangle",
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test.js",
+    "test": "npm run format && npm run build && npm run test-coverage"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "semi": false,
+    "trailingComma": "none"
+  },
+  "xo": {
+    "prettier": true,
+    "esnext": false
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
+  "remarkConfig": {
+    "plugins": [
+      "preset-wooorm"
+    ]
+  }
+}

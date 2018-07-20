@@ -1,6 +1,6 @@
 {
   "name": "bcp-47-match",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Match BCP 47 language tags with language ranges per RFC 4647",
   "license": "MIT",
   "keywords": [

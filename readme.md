@@ -208,7 +208,7 @@ Returns the first match, if any.
 
 [license]: license
 
-[author]: http://wooorm.com
+[author]: https://wooorm.com
 
 [bcp47]: https://github.com/wooorm/bcp-47
 

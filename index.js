@@ -1,7 +1,5 @@
 'use strict'
 
-/* eslint-disable no-constant-condition */
-
 // See https://tools.ietf.org/html/rfc4647#section-3.1
 // for more information on the algorithms.
 
@@ -84,7 +82,9 @@ function lookup(tag, range) {
   tag = lower(tag)
   range = lower(range)
 
+  /* eslint-disable no-constant-condition */
   while (true) {
+    /* eslint-enable no-constant-condition */
     if (range === asterisk || tag === range) {
       return true
     }

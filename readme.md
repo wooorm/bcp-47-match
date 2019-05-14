@@ -1,6 +1,11 @@
 <!--lint disable no-html-->
 
-# bcp-47-match [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# bcp-47-match
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
 
 Match [BCP 47][spec] language tags with “language ranges” per [RFC 4647][match],
 as done by the `:lang()` pseudo-class in CSS, or the `Accept-Language` HTTP
@@ -196,13 +201,21 @@ Returns the first match, if any.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/bcp-47-match.svg
+[build-badge]: https://img.shields.io/travis/wooorm/bcp-47-match.svg
 
-[travis]: https://travis-ci.org/wooorm/bcp-47-match
+[build]: https://travis-ci.org/wooorm/bcp-47-match
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47-match.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47-match.svg
 
-[codecov]: https://codecov.io/github/wooorm/bcp-47-match
+[coverage]: https://codecov.io/github/wooorm/bcp-47-match
+
+[downloads-badge]: https://img.shields.io/npm/dm/bcp-47-match.svg
+
+[downloads]: https://www.npmjs.com/package/bcp-47-match
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/bcp-47-match.svg
+
+[size]: https://bundlephobia.com/result?p=bcp-47-match
 
 [npm]: https://docs.npmjs.com/cli/install
 

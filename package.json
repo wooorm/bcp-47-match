@@ -22,10 +22,12 @@
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
-  "files": [
-    "index.js"
-  ],
+  "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "dependencies": {},
   "devDependencies": {
     "browserify": "^16.0.0",

@@ -99,7 +99,7 @@ function lookup(tag, range) {
       pos -= 2
     }
 
-    range = range.substring(0, pos)
+    range = range.slice(0, pos)
   }
 }
 

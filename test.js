@@ -44,8 +44,16 @@ test('basic(tags[, ranges="*"])', function(t) {
       ['en', 'de'],
       ['en-GB', 'en', 'de-de', 'de']
     ],
-    [['de-de', 'de', 'en-GB', 'en'], ['en-gb', 'de-de'], ['en-GB', 'de-de']],
-    [['de-de', 'de', 'en-GB', 'en'], ['de-de', 'de'], ['de-de', 'de']]
+    [
+      ['de-de', 'de', 'en-GB', 'en'],
+      ['en-gb', 'de-de'],
+      ['en-GB', 'de-de']
+    ],
+    [
+      ['de-de', 'de', 'en-GB', 'en'],
+      ['de-de', 'de'],
+      ['de-de', 'de']
+    ]
   ].forEach(check(t, basic))
 
   t.throws(
@@ -126,8 +134,16 @@ test('extended(tags[, ranges="*""])', function(t) {
       ['en', 'de'],
       ['en-GB', 'en', 'de-de', 'de']
     ],
-    [['de-de', 'de', 'en-GB', 'en'], ['en-gb', 'de-de'], ['en-GB', 'de-de']],
-    [['de-de', 'de', 'en-GB', 'en'], ['de-de', 'de'], ['de-de', 'de']],
+    [
+      ['de-de', 'de', 'en-GB', 'en'],
+      ['en-gb', 'de-de'],
+      ['en-GB', 'de-de']
+    ],
+    [
+      ['de-de', 'de', 'en-GB', 'en'],
+      ['de-de', 'de'],
+      ['de-de', 'de']
+    ],
     [
       ['de', 'de-de', 'de-DE-x-goethe', 'de-Deva', 'de-Deva-DE', 'de-x-DE'],
       'de-*-DE',

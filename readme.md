@@ -18,9 +18,9 @@ Related to [`bcp-47`][bcp47].
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [match.basicFilter(tags\[, ranges\])](#matchbasicfiltertags-ranges)
-    *   [match.extendedFilter(tags\[, ranges\])](#matchextendedfiltertags-ranges)
-    *   [match.lookup(tags, ranges)](#matchlookuptags-ranges)
+    *   [`match.basicFilter(tags[, ranges])`](#matchbasicfiltertags-ranges)
+    *   [`match.extendedFilter(tags[, ranges])`](#matchextendedfiltertags-ranges)
+    *   [`match.lookup(tags, ranges)`](#matchlookuptags-ranges)
 *   [License](#license)
 
 ## Install

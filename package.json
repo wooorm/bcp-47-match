@@ -65,8 +65,21 @@
     "branches": 100
   },
   "remarkConfig": {
+    "settings": {
+      "paddedTable": false
+    },
     "plugins": [
-      "preset-wooorm"
+      "preset-wooorm",
+      [
+        "toc",
+        {
+          "heading": "contents"
+        }
+      ],
+      [
+        "lint-table-pipe-alignment",
+        false
+      ]
     ]
   }
 }

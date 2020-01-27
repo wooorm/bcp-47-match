@@ -196,6 +196,19 @@ Returns the first match, if any.
 
 `string?` — The first matching tag in `tags`, or `undefined` otherwise.
 
+## Related
+
+*   [`bcp-47`](https://github.com/wooorm/bcp-47)
+    — Parse and serialize BCP 47 language tags
+*   [`iso-639-2`](https://github.com/wooorm/iso-639-2)
+    — ISO 639-2 codes
+*   [`iso-639-3`](https://github.com/wooorm/iso-639-3)
+    — ISO 639-3 codes
+*   [`iso-15924`](https://github.com/wooorm/iso-15924)
+    — ISO 15924 codes
+*   [`un-m49`](https://github.com/wooorm/un-m49)
+    — UN M49 codes
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]

@@ -200,6 +200,8 @@ Returns the first match, if any.
 
 *   [`bcp-47`](https://github.com/wooorm/bcp-47)
     — Parse and serialize BCP 47 language tags
+*   [`bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
+    — Normalize, canonicalize, and format BCP 47 tags
 *   [`iso-639-2`](https://github.com/wooorm/iso-639-2)
     — ISO 639-2 codes
 *   [`iso-639-3`](https://github.com/wooorm/iso-639-3)

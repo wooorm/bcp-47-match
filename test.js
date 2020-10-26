@@ -8,7 +8,7 @@ var basic = match.basicFilter
 var extended = match.extendedFilter
 var lookup = match.lookup
 
-test('basic(tags[, ranges="*"])', function(t) {
+test('basic(tags[, ranges="*"])', function (t) {
   ;[
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
@@ -57,7 +57,7 @@ test('basic(tags[, ranges="*"])', function(t) {
   ].forEach(check(t, basic))
 
   t.throws(
-    function() {
+    function () {
       basic()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -65,7 +65,7 @@ test('basic(tags[, ranges="*"])', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       basic('')
     },
     /^Error: Invalid tag ``, expected non-empty string$/,
@@ -73,7 +73,7 @@ test('basic(tags[, ranges="*"])', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       basic(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -83,7 +83,7 @@ test('basic(tags[, ranges="*"])', function(t) {
   t.end()
 })
 
-test('extended(tags[, ranges="*""])', function(t) {
+test('extended(tags[, ranges="*""])', function (t) {
   ;[
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
@@ -152,7 +152,7 @@ test('extended(tags[, ranges="*""])', function(t) {
   ].forEach(check(t, extended))
 
   t.throws(
-    function() {
+    function () {
       extended()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -160,7 +160,7 @@ test('extended(tags[, ranges="*""])', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       extended('')
     },
     /^Error: Invalid tag ``, expected non-empty string$/,
@@ -168,7 +168,7 @@ test('extended(tags[, ranges="*""])', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       extended(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -178,7 +178,7 @@ test('extended(tags[, ranges="*""])', function(t) {
   t.end()
 })
 
-test('lookup(tags[, ranges="*"])', function(t) {
+test('lookup(tags[, ranges="*"])', function (t) {
   ;[
     // Wildcards have no effect in `lookup`
     ['de-de', null, undefined],
@@ -218,16 +218,16 @@ test('lookup(tags[, ranges="*"])', function(t) {
 function check(t, fn) {
   return checker
 
-  function checker(opts) {
+  function checker(options) {
     t.deepEqual(
-      fn(opts[0], opts[1]),
-      opts[2],
+      fn(options[0], options[1]),
+      options[2],
       'f(' +
-        opts[0] +
+        options[0] +
         '; ' +
-        chalk.bold.green(opts[1]) +
+        chalk.bold.green(options[1]) +
         ') -> ' +
-        chalk.bold(String(opts[2]) || '[]')
+        chalk.bold(String(options[2]) || '[]')
     )
   }
 }

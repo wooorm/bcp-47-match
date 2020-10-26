@@ -21,6 +21,7 @@ Related to [`bcp-47`][bcp47].
     *   [`match.basicFilter(tags[, ranges])`](#matchbasicfiltertags-ranges)
     *   [`match.extendedFilter(tags[, ranges])`](#matchextendedfiltertags-ranges)
     *   [`match.lookup(tags, ranges)`](#matchlookuptags-ranges)
+*   [Related](#related)
 *   [License](#license)
 
 ## Install
@@ -75,25 +76,25 @@ Returns a list of matching tags in the order they matched.
 
 <details><summary>View matching table</summary>
 
-| Basic Filter | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
-| ------------ | --- | --- | ----- | ----- | -------- | ----- |
-| de | ✔︎ | ✔︎ |  |  |  |  |
-| de-CH | ✔︎ | ✔︎ | ✔︎ |  |  |  |
-| de-CH-1996 | ✔︎ | ✔︎ | ✔︎ |  |  |  |
-| de-DE | ✔︎ | ✔︎ |  | ✔︎ |  |  |
-| de-DE-1996 | ✔︎ | ✔︎ |  | ✔︎ |  |  |
-| de-DE-x-goethe | ✔︎ | ✔︎ |  | ✔︎ |  |  |
-| de-Deva | ✔︎ | ✔︎ |  |  |  |  |
-| de-Deva-DE | ✔︎ | ✔︎ |  |  |  |  |
-| de-Latf-DE | ✔︎ | ✔︎ |  |  |  |  |
-| de-Latn-DE | ✔︎ | ✔︎ |  |  |  |  |
-| de-Latn-DE-1996 | ✔︎ | ✔︎ |  |  |  |  |
-| de-x-DE | ✔︎ | ✔︎ |  |  |  |  |
-| en | ✔︎ |  |  |  |  |  |
-| en-GB | ✔︎ |  |  |  |  |  |
-| zh | ✔︎ |  |  |  |  |  |
-| zh-Hans | ✔︎ |  |  |  |  |  |
-| zh-Hant | ✔︎ |  |  |  |  |  |
+| Basic Filter | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| - | - | - | - | - | - | - |
+| de | ✔︎ | ✔︎ | | | | |
+| de-CH | ✔︎ | ✔︎ | ✔︎ | | | |
+| de-CH-1996 | ✔︎ | ✔︎ | ✔︎ | | | |
+| de-DE | ✔︎ | ✔︎ | | ✔︎ | | |
+| de-DE-1996 | ✔︎ | ✔︎ | | ✔︎ | | |
+| de-DE-x-goethe | ✔︎ | ✔︎ | | ✔︎ | | |
+| de-Deva | ✔︎ | ✔︎ | | | | |
+| de-Deva-DE | ✔︎ | ✔︎ | | | | |
+| de-Latf-DE | ✔︎ | ✔︎ | | | | |
+| de-Latn-DE | ✔︎ | ✔︎ | | | | |
+| de-Latn-DE-1996 | ✔︎ | ✔︎ | | | | |
+| de-x-DE | ✔︎ | ✔︎ | | | | |
+| en | ✔︎ | | | | | |
+| en-GB | ✔︎ | | | | | |
+| zh | ✔︎ | | | | | |
+| zh-Hans | ✔︎ | | | | | |
+| zh-Hant | ✔︎ | | | | | |
 
 </details>
 
@@ -119,25 +120,25 @@ with further ranges.
 
 <details><summary>View matching table</summary>
 
-| Extended Filter | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
-| --------------- | --- | --- | ----- | ----- | -------- | ----- |
-| de | ✔︎ | ✔︎ |  |  |  |  |
-| de-CH | ✔︎ | ✔︎ | ✔︎ |  |  | ✔︎ |
-| de-CH-1996 | ✔︎ | ✔︎ | ✔︎ |  |  | ✔︎ |
-| de-DE | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-DE-1996 | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-DE-x-goethe | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-Deva | ✔︎ | ✔︎ |  |  |  |  |
-| de-Deva-DE | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-Latf-DE | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-Latn-DE | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-Latn-DE-1996 | ✔︎ | ✔︎ |  | ✔︎ | ✔︎ |  |
-| de-x-DE | ✔︎ | ✔︎ |  |  |  |  |
-| en | ✔︎ |  |  |  |  |  |
-| en-GB | ✔︎ |  |  |  |  |  |
-| zh | ✔︎ |  |  |  |  |  |
-| zh-Hans | ✔︎ |  |  |  |  |  |
-| zh-Hant | ✔︎ |  |  |  |  |  |
+| Extended Filter | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| - | - | - | - | - | - | - |
+| de | ✔︎ | ✔︎ | | | | |
+| de-CH | ✔︎ | ✔︎ | ✔︎ | | | ✔︎ |
+| de-CH-1996 | ✔︎ | ✔︎ | ✔︎ | | | ✔︎ |
+| de-DE | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-DE-1996 | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-DE-x-goethe | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-Deva | ✔︎ | ✔︎ | | | | |
+| de-Deva-DE | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-Latf-DE | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-Latn-DE | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-Latn-DE-1996 | ✔︎ | ✔︎ | | ✔︎ | ✔︎ | |
+| de-x-DE | ✔︎ | ✔︎ | | | | |
+| en | ✔︎ | | | | | |
+| en-GB | ✔︎ | | | | | |
+| zh | ✔︎ | | | | | |
+| zh-Hans | ✔︎ | | | | | |
+| zh-Hant | ✔︎ | | | | | |
 
 </details>
 
@@ -164,25 +165,25 @@ Returns the first match, if any.
 
 <details><summary>View matching table</summary>
 
-| Lookup | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
-| ------ | --- | --- | ----- | ----- | -------- | ----- |
-| de |  | ✔︎︎ | ✔︎︎ | ✔︎ | ✔︎ | ✔︎ |
-| de-CH |  |  | ✔︎ |  |  | ✔︎ |
-| de-CH-1996 |  |  |  |  |  | ✔︎ |
-| de-DE |  |  |  | ✔︎ |  | ✔︎ |
-| de-DE-1996 |  |  |  |  |  | ✔︎ |
-| de-DE-x-goethe |  |  |  |  |  | ✔︎ |
-| de-Deva |  |  |  |  |  | ✔︎ |
-| de-Deva-DE |  |  |  |  |  | ✔︎ |
-| de-Latf-DE |  |  |  |  |  | ✔︎ |
-| de-Latn-DE |  |  |  |  |  | ✔︎ |
-| de-Latn-DE-1996 |  |  |  |  |  | ✔︎ |
-| de-x-DE |  |  |  |  |  | ✔︎ |
-| en |  |  |  |  |  | ✔︎ |
-| en-GB |  |  |  |  |  | ✔︎ |
-| zh |  |  |  |  |  | ✔︎ |
-| zh-Hans |  |  |  |  |  | ✔︎ |
-| zh-Hant |  |  |  |  |  | ✔︎ |
+| Lookup | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| - | - | - | - | - | - | - |
+| de | | ✔︎︎ | ✔︎︎ | ✔︎ | ✔︎ | ✔︎ |
+| de-CH | | | ✔︎ | | | ✔︎ |
+| de-CH-1996 | | | | | | ✔︎ |
+| de-DE | | | | ✔︎ | | ✔︎ |
+| de-DE-1996 | | | | | | ✔︎ |
+| de-DE-x-goethe | | | | | | ✔︎ |
+| de-Deva | | | | | | ✔︎ |
+| de-Deva-DE | | | | | | ✔︎ |
+| de-Latf-DE | | | | | | ✔︎ |
+| de-Latn-DE | | | | | | ✔︎ |
+| de-Latn-DE-1996 | | | | | | ✔︎ |
+| de-x-DE | | | | | | ✔︎ |
+| en | | | | | | ✔︎ |
+| en-GB | | | | | | ✔︎ |
+| zh | | | | | | ✔︎ |
+| zh-Hans | | | | | | ✔︎ |
+| zh-Hant | | | | | | ✔︎ |
 
 </details>
 

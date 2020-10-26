@@ -31,18 +31,18 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^16.0.0",
-    "chalk": "^3.0.0",
+    "browserify": "^17.0.0",
+    "chalk": "^4.0.0",
     "nyc": "^15.0.0",
-    "prettier": "^1.0.0",
-    "remark-cli": "^7.0.0",
-    "remark-preset-wooorm": "^6.0.0",
-    "tape": "^4.0.0",
-    "tinyify": "^2.0.0",
-    "xo": "^0.25.0"
+    "prettier": "^2.0.0",
+    "remark-cli": "^9.0.0",
+    "remark-preset-wooorm": "^8.0.0",
+    "tape": "^5.0.0",
+    "tinyify": "^3.0.0",
+    "xo": "^0.34.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
+    "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "build-bundle": "browserify index.js -s bcp47Match > bcp-47-match.js",
     "build-mangle": "browserify index.js -s bcp47Match -p tinyify > bcp-47-match.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
@@ -72,15 +72,12 @@
     "branches": 100
   },
   "remarkConfig": {
-    "settings": {
-      "paddedTable": false
-    },
     "plugins": [
       "preset-wooorm",
       [
-        "toc",
+        "gfm",
         {
-          "heading": "contents"
+          "tablePipeAlign": false
         }
       ],
       [

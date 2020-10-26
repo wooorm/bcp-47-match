@@ -1,3 +1,5 @@
 coverage/
 bcp-47-match.js
 bcp-47-match.min.js
+*.json
+*.md

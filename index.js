@@ -3,9 +3,6 @@
 // See https://tools.ietf.org/html/rfc4647#section-3.1
 // for more information on the algorithms.
 
-var dash = '-'
-var asterisk = '*'
-
 exports.basicFilter = factory(basic, true)
 exports.extendedFilter = factory(extended, true)
 exports.lookup = factory(lookup)
@@ -13,9 +10,7 @@ exports.lookup = factory(lookup)
 // Basic Filtering (Section 3.3.1) matches a language priority list consisting
 // of basic language ranges (Section 2.1) to sets of language tags.
 function basic(tag, range) {
-  tag = lower(tag)
-  range = lower(range)
-  return range === asterisk || tag === range || tag.indexOf(range + dash) !== -1
+  return range === '*' || tag === range || tag.indexOf(range + '-') > -1
 }
 
 // Extended Filtering (Section 3.3.2) matches a language priority list
@@ -23,50 +18,42 @@ function basic(tag, range) {
 // tags.
 function extended(tag, range) {
   // 3.3.2.1
-  var tags = lower(tag).split(dash)
-  var ranges = lower(range).split(dash)
-  var length = ranges.length
-  var rangeIndex = -1
-  var tagIndex = -1
-
-  tag = tags[++tagIndex]
-  range = ranges[++rangeIndex]
+  var left = tag.split('-')
+  var right = range.split('-')
+  var leftIndex = 0
+  var rightIndex = 0
 
   // 3.3.2.2
-  if (range !== asterisk && range !== tag) {
+  if (right[rightIndex] !== '*' && left[leftIndex] !== right[rightIndex]) {
     return false
   }
 
-  tag = tags[++tagIndex]
-  range = ranges[++rangeIndex]
+  leftIndex++
+  rightIndex++
 
   // 3.3.2.3
-  while (rangeIndex < length) {
+  while (rightIndex < right.length) {
     // 3.3.2.3.A
-    if (range === asterisk) {
-      range = ranges[++rangeIndex]
+    if (right[rightIndex] === '*') {
+      rightIndex++
       continue
     }
 
     // 3.3.2.3.B
-    if (!tag) {
-      return false
-    }
+    if (!left[leftIndex]) return false
 
     // 3.3.2.3.C
-    if (tag === range) {
-      tag = tags[++tagIndex]
-      range = ranges[++rangeIndex]
+    if (left[leftIndex] === right[rightIndex]) {
+      leftIndex++
+      rightIndex++
       continue
     }
 
     // 3.3.2.3.D
-    if (tag.length === 1) {
-      return false
-    }
+    if (left[leftIndex].length === 1) return false
 
     // 3.3.2.3.E
-    tag = tags[++tagIndex]
+    leftIndex++
   }
 
   // 3.3.2.4
@@ -77,29 +64,20 @@ function extended(tag, range) {
 // language ranges to sets of language tags to find the one exact language tag
 // that best matches the range.
 function lookup(tag, range) {
-  var pos
+  var right = range
+  var index
 
-  tag = lower(tag)
-  range = lower(range)
-
-  /* eslint-disable no-constant-condition */
+  /* eslint-disable-next-line no-constant-condition */
   while (true) {
-    /* eslint-enable no-constant-condition */
-    if (range === asterisk || tag === range) {
-      return true
-    }
+    if (right === '*' || tag === right) return true
 
-    pos = range.lastIndexOf(dash)
+    index = right.lastIndexOf('-')
 
-    if (pos === -1) {
-      return false
-    }
+    if (index < 0) return false
 
-    if (pos > 3 && range.charAt(pos - 2) === dash) {
-      pos -= 2
-    }
+    if (right.charAt(index - 2) === '-') index -= 2
 
-    range = range.slice(0, pos)
+    right = right.slice(0, index)
   }
 }
 
@@ -114,59 +92,40 @@ function factory(check, filter) {
   return match
 
   function match(tags, ranges) {
-    var values = normalize(tags, ranges)
-    var result = []
-    var next
-    var tagIndex
-    var tagLength
-    var tag
-    var rangeIndex
-    var rangeLength
+    var left = cast(tags, 'tag')
+    var right = cast(ranges == null ? '*' : ranges, 'range')
+    var matches = []
+    var rightIndex = -1
     var range
-    var matches
+    var leftIndex
+    var next
 
-    tags = values.tags
-    ranges = values.ranges
-    rangeLength = ranges.length
-    rangeIndex = -1
-
-    while (++rangeIndex < rangeLength) {
-      range = ranges[rangeIndex]
+    while (++rightIndex < right.length) {
+      range = right[rightIndex].toLowerCase()
 
       // Ignore wildcards in lookup mode.
-      if (!filter && range === asterisk) {
-        continue
-      }
+      if (!filter && range === '*') continue
 
-      tagLength = tags.length
-      tagIndex = -1
+      leftIndex = -1
       next = []
 
-      while (++tagIndex < tagLength) {
-        tag = tags[tagIndex]
-        matches = check(tag, range)
-        ;(matches ? result : next).push(tag)
-
-        // Exit if this is a lookup and we have a match.
-        if (!filter && matches) {
-          return tag
+      while (++leftIndex < left.length) {
+        if (check(left[leftIndex].toLowerCase(), range)) {
+          // Exit if this is a lookup and we have a match.
+          if (!filter) return left[leftIndex]
+          matches.push(left[leftIndex])
+        } else {
+          next.push(left[leftIndex])
         }
       }
 
-      tags = next
+      left = next
     }
 
     // If this is a filter, return the list.  If it’s a lookup, we didn’t find
     // a match, so return `undefined`.
-    return filter ? result : undefined
+    return filter ? matches : undefined
   }
-}
-
-// Normalize options.
-function normalize(tags, ranges) {
-  ranges = ranges === undefined || ranges === null ? asterisk : ranges
-
-  return {tags: cast(tags, 'tag'), ranges: cast(ranges, 'range')}
 }
 
 // Validate tags or ranges, and cast them to arrays.
@@ -180,8 +139,4 @@ function cast(values, name) {
   }
 
   return value
-}
-
-function lower(value) {
-  return value.toLowerCase()
 }

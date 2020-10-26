@@ -43,8 +43,8 @@
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify index.js -s bcp47Match > bcp-47-match.js",
-    "build-mangle": "browserify index.js -s bcp47Match -p tinyify > bcp-47-match.min.js",
+    "build-bundle": "browserify index.js -s bcp47Match -o bcp-47-match.js",
+    "build-mangle": "browserify index.js -s bcp47Match -p tinyify -o bcp-47-match.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
@@ -62,6 +62,14 @@
     "prettier": true,
     "esnext": false,
     "rules": {
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "no-eq-null": "off",
       "unicorn/prefer-includes": "off"
     }
   },

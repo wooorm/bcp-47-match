@@ -220,9 +220,9 @@ Returns the first match, if any.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/bcp-47-match.svg
+[build-badge]: https://github.com/wooorm/bcp-47-match/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/wooorm/bcp-47-match
+[build]: https://github.com/wooorm/bcp-47-match/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47-match.svg
 

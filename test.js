@@ -57,6 +57,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime
       basicFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -73,6 +74,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime
       basicFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -157,6 +159,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime
       extendedFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -173,6 +176,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
+      // @ts-ignore runtime
       extendedFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -224,6 +228,11 @@ test('lookup(tags[, ranges="*"])', function (t) {
   t.end()
 })
 
+/**
+ * @param {import('tape').Test} t
+ * @param {import('./index.js').Filter | import('./index.js').Lookup} fn
+ * @param {Array.<string|Array.<string>>} options
+ */
 function check(t, fn, options) {
   t.deepEqual(
     fn(options[0], options[1]),

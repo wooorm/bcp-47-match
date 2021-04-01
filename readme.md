@@ -18,9 +18,9 @@ Related to [`bcp-47`][bcp47].
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`basicFilter(tags[, ranges])`](#basicfiltertags-ranges)
-    *   [`extendedFilter(tags[, ranges])`](#extendedfiltertags-ranges)
-    *   [`match.lookup(tags, ranges)`](#matchlookuptags-ranges)
+    *   [`basicFilter(tags[, ranges='*'])`](#basicfiltertags-ranges)
+    *   [`extendedFilter(tags[, ranges='*'])`](#extendedfiltertags-ranges)
+    *   [`lookup(tags, ranges)`](#lookuptags-ranges)
 *   [Related](#related)
 *   [License](#license)
 
@@ -68,7 +68,7 @@ This package exports the following identifiers: `basicFilter`, `extendedFilter`,
 `lookup`.
 There is no default export.
 
-### `basicFilter(tags[, ranges])`
+### `basicFilter(tags[, ranges='*'])`
 
 > [See Basic Filtering spec](https://tools.ietf.org/html/rfc4647#section-3.3.1)
 
@@ -113,7 +113,7 @@ Returns a list of matching tags in the order they matched.
 `Array.<string>` — Possibly empty list of matching tags in the order they
 matched.
 
-### `extendedFilter(tags[, ranges])`
+### `extendedFilter(tags[, ranges='*'])`
 
 > [See Extended Filtering spec](https://tools.ietf.org/html/rfc4647#section-3.3.2)
 
@@ -157,7 +157,7 @@ with further ranges.
 `Array.<string>` — Possibly empty list of matching tags in the order they
 matched.
 
-### `match.lookup(tags, ranges)`
+### `lookup(tags, ranges)`
 
 > [See Lookup spec](https://tools.ietf.org/html/rfc4647#section-3.4)
 

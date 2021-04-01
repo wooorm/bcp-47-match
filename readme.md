@@ -18,13 +18,16 @@ Related to [`bcp-47`][bcp47].
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`match.basicFilter(tags[, ranges])`](#matchbasicfiltertags-ranges)
-    *   [`match.extendedFilter(tags[, ranges])`](#matchextendedfiltertags-ranges)
+    *   [`basicFilter(tags[, ranges])`](#basicfiltertags-ranges)
+    *   [`extendedFilter(tags[, ranges])`](#extendedfiltertags-ranges)
     *   [`match.lookup(tags, ranges)`](#matchlookuptags-ranges)
 *   [Related](#related)
 *   [License](#license)
 
 ## Install
+
+This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
+instead of `require`d.
 
 [npm][]:
 
@@ -35,26 +38,22 @@ npm install bcp-47-match
 ## Use
 
 ```js
-var match = require('bcp-47-match')
-
-var basic = match.basicFilter
-var extended = match.extendedFilter
-var lookup = match.lookup
+import {basicFilter, extendedFilter, lookup} from 'bcp-47-match'
 
 var tags = ['en-GB', 'de-CH', 'en', 'de']
 
-console.log(basic(tags, '*')) // => [ 'en-GB', 'de-CH', 'en', 'de' ]
-console.log(basic(tags, 'en')) // => [ 'en-GB', 'en' ]
-console.log(basic(tags, 'en-GB')) // => [ 'en-GB' ]
-console.log(basic(tags, ['en-GB', 'en'])) // => [ 'en-GB', 'en' ]
-console.log(basic(tags, 'jp')) // => []
+console.log(basicFilter(tags, '*')) // => [ 'en-GB', 'de-CH', 'en', 'de' ]
+console.log(basicFilter(tags, 'en')) // => [ 'en-GB', 'en' ]
+console.log(basicFilter(tags, 'en-GB')) // => [ 'en-GB' ]
+console.log(basicFilter(tags, ['en-GB', 'en'])) // => [ 'en-GB', 'en' ]
+console.log(basicFilter(tags, 'jp')) // => []
 
-console.log(extended(tags, '*')) // => [ 'en-GB', 'de-CH', 'en', 'de' ]
-console.log(extended(tags, 'en')) // => [ 'en-GB', 'en' ]
-console.log(extended(tags, 'en-GB')) // => [ 'en-GB' ]
-console.log(extended(tags, '*-GB')) // => [ 'en-GB' ]
-console.log(extended(tags, ['en-GB', 'en'])) // => [ 'en-GB', 'en' ]
-console.log(extended(tags, 'jp')) // => []
+console.log(extendedFilter(tags, '*')) // => [ 'en-GB', 'de-CH', 'en', 'de' ]
+console.log(extendedFilter(tags, 'en')) // => [ 'en-GB', 'en' ]
+console.log(extendedFilter(tags, 'en-GB')) // => [ 'en-GB' ]
+console.log(extendedFilter(tags, '*-GB')) // => [ 'en-GB' ]
+console.log(extendedFilter(tags, ['en-GB', 'en'])) // => [ 'en-GB', 'en' ]
+console.log(extendedFilter(tags, 'jp')) // => []
 
 console.log(lookup(tags, 'en')) // => 'en'
 console.log(lookup(tags, 'en-GB')) // => 'en-GB'
@@ -65,7 +64,11 @@ console.log(lookup(tags, 'jp')) // => undefined
 
 ## API
 
-### `match.basicFilter(tags[, ranges])`
+This package exports the following identifiers: `basicFilter`, `extendedFilter`,
+`lookup`.
+There is no default export.
+
+### `basicFilter(tags[, ranges])`
 
 > [See Basic Filtering spec](https://tools.ietf.org/html/rfc4647#section-3.3.1)
 
@@ -110,7 +113,7 @@ Returns a list of matching tags in the order they matched.
 `Array.<string>` — Possibly empty list of matching tags in the order they
 matched.
 
-### `match.extendedFilter(tags[, ranges])`
+### `extendedFilter(tags[, ranges])`
 
 > [See Extended Filtering spec](https://tools.ietf.org/html/rfc4647#section-3.3.2)
 

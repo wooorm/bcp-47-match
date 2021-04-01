@@ -1,16 +1,14 @@
-'use strict'
-
 // See https://tools.ietf.org/html/rfc4647#section-3.1
 // for more information on the algorithms.
 
-exports.basicFilter = factory(basic, true)
-exports.extendedFilter = factory(extended, true)
-exports.lookup = factory(lookup)
+export var basicFilter = factory(basic, true)
+export var extendedFilter = factory(extended, true)
+export var lookup = factory(look)
 
 // Basic Filtering (Section 3.3.1) matches a language priority list consisting
 // of basic language ranges (Section 2.1) to sets of language tags.
 function basic(tag, range) {
-  return range === '*' || tag === range || tag.indexOf(range + '-') > -1
+  return range === '*' || tag === range || tag.includes(range + '-')
 }
 
 // Extended Filtering (Section 3.3.2) matches a language priority list
@@ -63,7 +61,7 @@ function extended(tag, range) {
 // Lookup (Section 3.4) matches a language priority list consisting of basic
 // language ranges to sets of language tags to find the one exact language tag
 // that best matches the range.
-function lookup(tag, range) {
+function look(tag, range) {
   var right = range
   var index
 
@@ -93,7 +91,10 @@ function factory(check, filter) {
 
   function match(tags, ranges) {
     var left = cast(tags, 'tag')
-    var right = cast(ranges == null ? '*' : ranges, 'range')
+    var right = cast(
+      ranges === null || ranges === undefined ? '*' : ranges,
+      'range'
+    )
     var matches = []
     var rightIndex = -1
     var range

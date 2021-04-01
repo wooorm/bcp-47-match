@@ -1,14 +1,8 @@
-'use strict'
+import test from 'tape'
+import chalk from 'chalk'
+import {basicFilter, extendedFilter, lookup} from './index.js'
 
-var test = require('tape')
-var chalk = require('chalk')
-var match = require('.')
-
-var basic = match.basicFilter
-var extended = match.extendedFilter
-var lookup = match.lookup
-
-test('basic(tags[, ranges="*"])', function (t) {
+test('basicFilter(tags[, ranges="*"])', function (t) {
   var basics = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
@@ -58,12 +52,12 @@ test('basic(tags[, ranges="*"])', function (t) {
   var index = -1
 
   while (++index < basics.length) {
-    check(t, basic, basics[index])
+    check(t, basicFilter, basics[index])
   }
 
   t.throws(
     function () {
-      basic()
+      basicFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
     'should throw without tag'
@@ -71,7 +65,7 @@ test('basic(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
-      basic('')
+      basicFilter('')
     },
     /^Error: Invalid tag ``, expected non-empty string$/,
     'should throw with empty string tag'
@@ -79,7 +73,7 @@ test('basic(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
-      basic(1)
+      basicFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
     'should throw with invalid tag'
@@ -88,7 +82,7 @@ test('basic(tags[, ranges="*"])', function (t) {
   t.end()
 })
 
-test('extended(tags[, ranges="*""])', function (t) {
+test('extendedFilter(tags[, ranges="*""])', function (t) {
   var extendeds = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
@@ -158,12 +152,12 @@ test('extended(tags[, ranges="*""])', function (t) {
   var index = -1
 
   while (++index < extendeds.length) {
-    check(t, extended, extendeds[index])
+    check(t, extendedFilter, extendeds[index])
   }
 
   t.throws(
     function () {
-      extended()
+      extendedFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
     'should throw without tag'
@@ -171,7 +165,7 @@ test('extended(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
-      extended('')
+      extendedFilter('')
     },
     /^Error: Invalid tag ``, expected non-empty string$/,
     'should throw with empty string tag'
@@ -179,7 +173,7 @@ test('extended(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
-      extended(1)
+      extendedFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
     'should throw with invalid tag'

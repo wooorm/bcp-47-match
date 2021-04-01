@@ -9,7 +9,7 @@ var extended = match.extendedFilter
 var lookup = match.lookup
 
 test('basic(tags[, ranges="*"])', function (t) {
-  ;[
+  var basics = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
@@ -54,7 +54,12 @@ test('basic(tags[, ranges="*"])', function (t) {
       ['de-de', 'de'],
       ['de-de', 'de']
     ]
-  ].forEach(check(t, basic))
+  ]
+  var index = -1
+
+  while (++index < basics.length) {
+    check(t, basic, basics[index])
+  }
 
   t.throws(
     function () {
@@ -84,7 +89,7 @@ test('basic(tags[, ranges="*"])', function (t) {
 })
 
 test('extended(tags[, ranges="*""])', function (t) {
-  ;[
+  var extendeds = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
@@ -149,7 +154,12 @@ test('extended(tags[, ranges="*""])', function (t) {
       'de-*-DE',
       ['de-de', 'de-DE-x-goethe', 'de-Deva-DE']
     ]
-  ].forEach(check(t, extended))
+  ]
+  var index = -1
+
+  while (++index < extendeds.length) {
+    check(t, extended, extendeds[index])
+  }
 
   t.throws(
     function () {
@@ -179,7 +189,7 @@ test('extended(tags[, ranges="*""])', function (t) {
 })
 
 test('lookup(tags[, ranges="*"])', function (t) {
-  ;[
+  var lookups = [
     // Wildcards have no effect in `lookup`
     ['de-de', null, undefined],
     ['de-de', '*', undefined],
@@ -210,24 +220,25 @@ test('lookup(tags[, ranges="*"])', function (t) {
       'zh-Hant-CN-x-private1-private2',
       'zh-Hant'
     ]
-  ].forEach(check(t, lookup))
+  ]
+  var index = -1
+
+  while (++index < lookups.length) {
+    check(t, lookup, lookups[index])
+  }
 
   t.end()
 })
 
-function check(t, fn) {
-  return checker
-
-  function checker(options) {
-    t.deepEqual(
-      fn(options[0], options[1]),
-      options[2],
-      'f(' +
-        options[0] +
-        '; ' +
-        chalk.bold.green(options[1]) +
-        ') -> ' +
-        chalk.bold(String(options[2]) || '[]')
-    )
-  }
+function check(t, fn, options) {
+  t.deepEqual(
+    fn(options[0], options[1]),
+    options[2],
+    'f(' +
+      options[0] +
+      '; ' +
+      chalk.bold.green(options[1]) +
+      ') -> ' +
+      chalk.bold(String(options[2]) || '[]')
+  )
 }

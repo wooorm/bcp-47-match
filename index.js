@@ -50,21 +50,16 @@ const factory = (
       /** @type {Tags} */
       const matches = []
       let rightIndex = -1
-      /** @type {Range} */
-      let range
-      /** @type {number} */
-      let leftIndex
-      /** @type {Tags} */
-      let next
 
       while (++rightIndex < right.length) {
-        range = right[rightIndex].toLowerCase()
+        const range = right[rightIndex].toLowerCase()
 
         // Ignore wildcards in lookup mode.
         if (!filter && range === '*') continue
 
-        leftIndex = -1
-        next = []
+        let leftIndex = -1
+        /** @type {Tags} */
+        const next = []
 
         while (++leftIndex < left.length) {
           if (check(left[leftIndex].toLowerCase(), range)) {
@@ -169,14 +164,12 @@ export const lookup = factory(
   /** @type {Check} */
   function (tag, range) {
     let right = range
-    /** @type {number} */
-    let index
 
     /* eslint-disable-next-line no-constant-condition */
     while (true) {
       if (right === '*' || tag === right) return true
 
-      index = right.lastIndexOf('-')
+      let index = right.lastIndexOf('-')
 
       if (index < 0) return false
 

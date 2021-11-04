@@ -79,7 +79,7 @@ Returns a list of matching tags in the order they matched.
 
 <details><summary>View matching table</summary>
 
-| Basic Filter | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| Basic Filter | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
 | - | - | - | - | - | - | - |
 | de | ✔︎ | ✔︎ | | | | |
 | de-CH | ✔︎ | ✔︎ | ✔︎ | | | |
@@ -123,7 +123,7 @@ with further ranges.
 
 <details><summary>View matching table</summary>
 
-| Extended Filter | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| Extended Filter | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
 | - | - | - | - | - | - | - |
 | de | ✔︎ | ✔︎ | | | | |
 | de-CH | ✔︎ | ✔︎ | ✔︎ | | | ✔︎ |
@@ -168,7 +168,7 @@ Returns the first match, if any.
 
 <details><summary>View matching table</summary>
 
-| Lookup | * | de | de-CH | de-DE | de-*-DE | *-CH |
+| Lookup | \* | de | de-CH | de-DE | de-\*-DE | \*-CH |
 | - | - | - | - | - | - | - |
 | de | | ✔︎︎ | ✔︎︎ | ✔︎ | ✔︎ | ✔︎ |
 | de-CH | | | ✔︎ | | | ✔︎ |

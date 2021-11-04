@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import {basicFilter, extendedFilter, lookup} from './index.js'
 
 test('basicFilter(tags[, ranges="*"])', function (t) {
-  var basics = [
+  const basics = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
@@ -49,7 +49,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
       ['de-de', 'de']
     ]
   ]
-  var index = -1
+  let index = -1
 
   while (++index < basics.length) {
     check(t, basicFilter, basics[index])
@@ -85,7 +85,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 })
 
 test('extendedFilter(tags[, ranges="*""])', function (t) {
-  var extendeds = [
+  const extendeds = [
     ['de-de', null, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
@@ -151,7 +151,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
       ['de-de', 'de-DE-x-goethe', 'de-Deva-DE']
     ]
   ]
-  var index = -1
+  let index = -1
 
   while (++index < extendeds.length) {
     check(t, extendedFilter, extendeds[index])
@@ -187,7 +187,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 })
 
 test('lookup(tags[, ranges="*"])', function (t) {
-  var lookups = [
+  const lookups = [
     // Wildcards have no effect in `lookup`
     ['de-de', null, undefined],
     ['de-de', '*', undefined],
@@ -219,7 +219,7 @@ test('lookup(tags[, ranges="*"])', function (t) {
       'zh-Hant'
     ]
   ]
-  var index = -1
+  let index = -1
 
   while (++index < lookups.length) {
     check(t, lookup, lookups[index])

@@ -28,7 +28,7 @@
  * }}
  */
 // prettier-ignore
-var factory = (
+const factory = (
   /**
    * @param {Check} check
    * @param {boolean} [filter=false]
@@ -42,20 +42,20 @@ var factory = (
      * @returns {Tag|Tags}
      */
     function match(tags, ranges) {
-      var left = cast(tags, 'tag')
-      var right = cast(
+      let left = cast(tags, 'tag')
+      const right = cast(
         ranges === null || ranges === undefined ? '*' : ranges,
         'range'
       )
       /** @type {Tags} */
-      var matches = []
-      var rightIndex = -1
+      const matches = []
+      let rightIndex = -1
       /** @type {Range} */
-      var range
+      let range
       /** @type {number} */
-      var leftIndex
+      let leftIndex
       /** @type {Tags} */
-      var next
+      let next
 
       while (++rightIndex < right.length) {
         range = right[rightIndex].toLowerCase()
@@ -93,7 +93,7 @@ var factory = (
  * @param {Range|Ranges} [ranges]
  * @returns {Tags}
  */
-export var basicFilter = factory(
+export const basicFilter = factory(
   /** @type {Check} */
   function (tag, range) {
     return range === '*' || tag === range || tag.includes(range + '-')
@@ -109,14 +109,14 @@ export var basicFilter = factory(
  * @param {Range|Ranges} [ranges]
  * @returns {Tags}
  */
-export var extendedFilter = factory(
+export const extendedFilter = factory(
   /** @type {Check} */
   function (tag, range) {
     // 3.3.2.1
-    var left = tag.split('-')
-    var right = range.split('-')
-    var leftIndex = 0
-    var rightIndex = 0
+    const left = tag.split('-')
+    const right = range.split('-')
+    let leftIndex = 0
+    let rightIndex = 0
 
     // 3.3.2.2
     if (right[rightIndex] !== '*' && left[leftIndex] !== right[rightIndex]) {
@@ -165,12 +165,12 @@ export var extendedFilter = factory(
  * @param {Range|Ranges} [ranges]
  * @returns {Tag}
  */
-export var lookup = factory(
+export const lookup = factory(
   /** @type {Check} */
   function (tag, range) {
-    var right = range
+    let right = range
     /** @type {number} */
-    var index
+    let index
 
     /* eslint-disable-next-line no-constant-condition */
     while (true) {
@@ -195,7 +195,7 @@ export var lookup = factory(
  * @returns {Array.<string>}
  */
 function cast(values, name) {
-  var value = values && typeof values === 'string' ? [values] : values
+  const value = values && typeof values === 'string' ? [values] : values
 
   if (!value || typeof value !== 'object' || !('length' in value)) {
     throw new Error(

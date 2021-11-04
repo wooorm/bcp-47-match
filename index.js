@@ -1,16 +1,34 @@
 /**
- * See https://tools.ietf.org/html/rfc4647#section-3.1
+ * See <https://tools.ietf.org/html/rfc4647#section-3.1>
  * for more information on the algorithms.
  */
 
 /**
  * @typedef {string} Tag
- * @typedef {Array.<Tag>} Tags
+ * @typedef {Array<Tag>} Tags
  * @typedef {string} Range
- * @typedef {Array.<Range>} Ranges
- * @typedef {function(Tag, Range): boolean} Check
- * @typedef {function(Tag|Tags, Range|Ranges=): Tags} Filter
- * @typedef {function(Tag|Tags, Range|Ranges=): Tag} Lookup
+ * @typedef {Array<Range>} Ranges
+ */
+
+/**
+ * @callback Check
+ * @param {Tag} tag
+ * @param {Range} range
+ * @returns {boolean}
+ */
+
+/**
+ * @callback Filter
+ * @param {Tag|Tags} tag
+ * @param {Range|Ranges} [ranges]
+ * @returns {Tag}
+ */
+
+/**
+ * @callback Lookup
+ * @param {Tag|Tags} tag
+ * @param {Range|Ranges} [ranges]
+ * @returns {Tag}
  */
 
 /**
@@ -39,7 +57,7 @@ const factory = (
     /**
      * @param {Tag|Tags} tags
      * @param {Range|Ranges} [ranges='*']
-     * @returns {Tag|Tags}
+     * @returns {Tag|Tags|undefined}
      */
     function match(tags, ranges) {
       let left = cast(tags, 'tag')
@@ -183,9 +201,9 @@ export const lookup = factory(
 /**
  * Validate tags or ranges, and cast them to arrays.
  *
- * @param {string|Array.<string>} values
+ * @param {string|Array<string>} values
  * @param {string} name
- * @returns {Array.<string>}
+ * @returns {Array<string>}
  */
 function cast(values, name) {
   const value = values && typeof values === 'string' ? [values] : values

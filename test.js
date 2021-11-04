@@ -1,10 +1,17 @@
+/**
+ * @typedef {import('tape').Test} Test
+ * @typedef {import('./index.js').Filter} Filter
+ * @typedef {import('./index.js').Lookup} Lookup
+ */
+
 import test from 'tape'
 import chalk from 'chalk'
 import {basicFilter, extendedFilter, lookup} from './index.js'
 
 test('basicFilter(tags[, ranges="*"])', function (t) {
+  /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const basics = [
-    ['de-de', null, ['de-de']],
+    ['de-de', undefined, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
     ['de-DE-1996', '*', ['de-DE-1996']],
@@ -57,7 +64,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
-      // @ts-ignore runtime
+      // @ts-expect-error runtime
       basicFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -74,7 +81,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 
   t.throws(
     function () {
-      // @ts-ignore runtime
+      // @ts-expect-error runtime
       basicFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -85,8 +92,9 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
 })
 
 test('extendedFilter(tags[, ranges="*""])', function (t) {
+  /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const extendeds = [
-    ['de-de', null, ['de-de']],
+    ['de-de', undefined, ['de-de']],
     ['de-de', '*', ['de-de']],
     ['de-DE', '*', ['de-DE']],
     ['de-Latn-DE', '*', ['de-Latn-DE']],
@@ -159,7 +167,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
-      // @ts-ignore runtime
+      // @ts-expect-error runtime
       extendedFilter()
     },
     /^Error: Invalid tag `undefined`, expected non-empty string$/,
@@ -176,7 +184,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 
   t.throws(
     function () {
-      // @ts-ignore runtime
+      // @ts-expect-error runtime
       extendedFilter(1)
     },
     /^Error: Invalid tag `1`, expected non-empty string$/,
@@ -187,9 +195,10 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
 })
 
 test('lookup(tags[, ranges="*"])', function (t) {
+  /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const lookups = [
     // Wildcards have no effect in `lookup`
-    ['de-de', null, undefined],
+    ['de-de', undefined, undefined],
     ['de-de', '*', undefined],
     ['de-DE', '*', undefined],
     ['en-GB', 'de-ch', undefined],
@@ -229,9 +238,9 @@ test('lookup(tags[, ranges="*"])', function (t) {
 })
 
 /**
- * @param {import('tape').Test} t
- * @param {import('./index.js').Filter | import('./index.js').Lookup} fn
- * @param {Array.<string|Array.<string>>} options
+ * @param {Test} t
+ * @param {Filter|Lookup} fn
+ * @param {[string|string[], string|string[]|undefined, unknown]} options
  */
 function check(t, fn, options) {
   t.deepEqual(

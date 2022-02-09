@@ -3,7 +3,6 @@
  * for more information on the algorithms.
  */
 
-
 /**
  * @typedef {string} Tag
  * @typedef {Array<Tag>} Tags
@@ -17,7 +16,6 @@
  * @param {Range} range
  * @returns {boolean}
  */
-
 
 /**
  * @typedef {Tags} FilterResponseType
@@ -39,7 +37,6 @@
  * @param {Tag|Tags} tags
  * @param {Range|Ranges} [ranges='*']
  * @returns {FilterOrLookupResponse<IsFilter>}
- * @private
  *
  */
 
@@ -60,11 +57,11 @@
 // prettier-ignore
 
 /**
-  * @template {true|false} IsFilter
-  * @param {Check} check
-  * @param {IsFilter} filter
-  * @returns {FilterOrLookup<IsFilter>}
-  */
+ * @template {true|false} IsFilter
+ * @param {Check} check
+ * @param {IsFilter} filter
+ * @returns {FilterOrLookup<IsFilter>}
+ */
 function factory(check, filter) {
 
     /**
@@ -98,6 +95,7 @@ function factory(check, filter) {
             if (!filter) {
               return /** @type {FilterOrLookupResponse<IsFilter>} */ (left[leftIndex]);
             }
+
             matches.push(left[leftIndex])
           } else {
             next.push(left[leftIndex])
@@ -112,10 +110,10 @@ function factory(check, filter) {
 
       return /** @type {FilterOrLookupResponse<IsFilter>} */ (filter ? matches : undefined);
     }
+
   /** @type {FilterOrLookup<IsFilter>} */
   return match;
 }
-
 
 /**
  * Basic Filtering (Section 3.3.1) matches a language priority list consisting
@@ -231,5 +229,3 @@ function cast(values, name) {
 
   return value
 }
-
-

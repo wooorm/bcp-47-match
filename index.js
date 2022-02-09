@@ -21,7 +21,7 @@
  * @callback Filter
  * @param {Tag|Tags} tag
  * @param {Range|Ranges} [ranges]
- * @returns {Tag}
+ * @returns {Tags}
  */
 
 /**

@@ -3,6 +3,7 @@
  * for more information on the algorithms.
  */
 
+
 /**
  * @typedef {string} Tag
  * @typedef {Array<Tag>} Tags
@@ -17,18 +18,34 @@
  * @returns {boolean}
  */
 
+
 /**
- * @callback Filter
- * @param {Tag|Tags} tag
- * @param {Range|Ranges} [ranges]
- * @returns {Tags}
+ * @typedef {Tags} FilterResponseType
+ * @typedef {Tag|undefined} LookupResponseType
+ *
  */
 
 /**
- * @callback Lookup
- * @param {Tag|Tags} tag
- * @param {Range|Ranges} [ranges]
- * @returns {Tag}
+ *
+ * @template {true|false} IsFilter
+ * @typedef {IsFilter extends true ? FilterResponseType : LookupResponseType} FilterOrLookupResponse
+ *
+ */
+
+/**
+ *
+ * @template {true|false} IsFilter
+ * @callback FilterOrLookup
+ * @param {Tag|Tags} tags
+ * @param {Range|Ranges} [ranges='*']
+ * @returns {FilterOrLookupResponse<IsFilter>}
+ * @private
+ *
+ */
+
+/**
+ * @typedef {FilterOrLookup<true>} Filter
+ * @typedef {FilterOrLookup<false>} Lookup
  */
 
 /**
@@ -39,27 +56,23 @@
  * This match function iterates over ranges, and for each range,
  * iterates over tags.  That way, earlier ranges matching any tag have
  * precedence over later ranges.
- *
- * @type {{
- *   (check: Check, filter: true): Filter
- *   (check: Check, filter?: false): Lookup
- * }}
  */
 // prettier-ignore
-const factory = (
-  /**
-   * @param {Check} check
-   * @param {boolean} [filter=false]
-   */
-  function (check, filter) {
-    return match
+
+/**
+  * @template {true|false} IsFilter
+  * @param {Check} check
+  * @param {IsFilter} filter
+  * @returns {FilterOrLookup<IsFilter>}
+  */
+function factory(check, filter) {
 
     /**
      * @param {Tag|Tags} tags
      * @param {Range|Ranges} [ranges='*']
-     * @returns {Tag|Tags|undefined}
+     * @returns {FilterOrLookupResponse<IsFilter>}
      */
-    function match(tags, ranges) {
+    function match (tags, ranges) {
       let left = cast(tags, 'tag')
       const right = cast(
         ranges === null || ranges === undefined ? '*' : ranges,
@@ -82,7 +95,9 @@ const factory = (
         while (++leftIndex < left.length) {
           if (check(left[leftIndex].toLowerCase(), range)) {
             // Exit if this is a lookup and we have a match.
-            if (!filter) return left[leftIndex]
+            if (!filter) {
+              return /** @type {FilterOrLookupResponse<IsFilter>} */ (left[leftIndex]);
+            }
             matches.push(left[leftIndex])
           } else {
             next.push(left[leftIndex])
@@ -94,17 +109,19 @@ const factory = (
 
       // If this is a filter, return the list.  If it’s a lookup, we didn’t find
       // a match, so return `undefined`.
-      return filter ? matches : undefined
+
+      return /** @type {FilterOrLookupResponse<IsFilter>} */ (filter ? matches : undefined);
     }
-  }
-)
+  /** @type {FilterOrLookup<IsFilter>} */
+  return match;
+}
+
 
 /**
  * Basic Filtering (Section 3.3.1) matches a language priority list consisting
  * of basic language ranges (Section 2.1) to sets of language tags.
- * @param {Tag|Tags} tags
- * @param {Range|Ranges} [ranges]
- * @returns {Tags}
+ *
+ * @type Filter
  */
 export const basicFilter = factory(
   /** @type {Check} */
@@ -118,9 +135,8 @@ export const basicFilter = factory(
  * Extended Filtering (Section 3.3.2) matches a language priority list
  * consisting of extended language ranges (Section 2.2) to sets of language
  * tags.
- * @param {Tag|Tags} tags
- * @param {Range|Ranges} [ranges]
- * @returns {Tags}
+ *
+ * @type Filter
  */
 export const extendedFilter = factory(
   /** @type {Check} */
@@ -174,9 +190,7 @@ export const extendedFilter = factory(
  * Lookup (Section 3.4) matches a language priority list consisting of basic
  * language ranges to sets of language tags to find the one exact language tag
  * that best matches the range.
- * @param {Tag|Tags} tags
- * @param {Range|Ranges} [ranges]
- * @returns {Tag}
+ * @type Lookup
  */
 export const lookup = factory(
   /** @type {Check} */
@@ -195,7 +209,8 @@ export const lookup = factory(
 
       right = right.slice(0, index)
     }
-  }
+  },
+  false
 )
 
 /**
@@ -216,3 +231,5 @@ function cast(values, name) {
 
   return value
 }
+
+

@@ -8,41 +8,22 @@
  * @typedef {Array<Tag>} Tags
  * @typedef {string} Range
  * @typedef {Array<Range>} Ranges
- */
-
-/**
+ *
  * @callback Check
  * @param {Tag} tag
  * @param {Range} range
  * @returns {boolean}
+ *
+ * @typedef {FilterOrLookup<true>} Filter
+ * @typedef {FilterOrLookup<false>} Lookup
  */
 
 /**
- * @typedef {Tags} FilterResponseType
- * @typedef {Tag|undefined} LookupResponseType
- *
- */
-
-/**
- *
- * @template {true|false} IsFilter
- * @typedef {IsFilter extends true ? FilterResponseType : LookupResponseType} FilterOrLookupResponse
- *
- */
-
-/**
- *
- * @template {true|false} IsFilter
+ * @template {boolean} IsFilter
  * @callback FilterOrLookup
  * @param {Tag|Tags} tags
  * @param {Range|Ranges} [ranges='*']
- * @returns {FilterOrLookupResponse<IsFilter>}
- *
- */
-
-/**
- * @typedef {FilterOrLookup<true>} Filter
- * @typedef {FilterOrLookup<false>} Lookup
+ * @returns {IsFilter extends true ? Tags : Tag|undefined}
  */
 
 /**
@@ -53,163 +34,137 @@
  * This match function iterates over ranges, and for each range,
  * iterates over tags.  That way, earlier ranges matching any tag have
  * precedence over later ranges.
- */
-// prettier-ignore
-
-/**
- * @template {true|false} IsFilter
+ *
+ * @template {boolean} IsFilter
  * @param {Check} check
  * @param {IsFilter} filter
  * @returns {FilterOrLookup<IsFilter>}
  */
 function factory(check, filter) {
+  return function (tags, ranges) {
+    let left = cast(tags, 'tag')
+    const right = cast(
+      ranges === null || ranges === undefined ? '*' : ranges,
+      'range'
+    )
+    /** @type {Tags} */
+    const matches = []
+    let rightIndex = -1
 
-    /**
-     * @param {Tag|Tags} tags
-     * @param {Range|Ranges} [ranges='*']
-     * @returns {FilterOrLookupResponse<IsFilter>}
-     */
-    function match (tags, ranges) {
-      let left = cast(tags, 'tag')
-      const right = cast(
-        ranges === null || ranges === undefined ? '*' : ranges,
-        'range'
-      )
+    while (++rightIndex < right.length) {
+      const range = right[rightIndex].toLowerCase()
+
+      // Ignore wildcards in lookup mode.
+      if (!filter && range === '*') continue
+
+      let leftIndex = -1
       /** @type {Tags} */
-      const matches = []
-      let rightIndex = -1
+      const next = []
 
-      while (++rightIndex < right.length) {
-        const range = right[rightIndex].toLowerCase()
-
-        // Ignore wildcards in lookup mode.
-        if (!filter && range === '*') continue
-
-        let leftIndex = -1
-        /** @type {Tags} */
-        const next = []
-
-        while (++leftIndex < left.length) {
-          if (check(left[leftIndex].toLowerCase(), range)) {
-            // Exit if this is a lookup and we have a match.
-            if (!filter) {
-              return /** @type {FilterOrLookupResponse<IsFilter>} */ (left[leftIndex]);
-            }
-
-            matches.push(left[leftIndex])
-          } else {
-            next.push(left[leftIndex])
+      while (++leftIndex < left.length) {
+        if (check(left[leftIndex].toLowerCase(), range)) {
+          // Exit if this is a lookup and we have a match.
+          if (!filter) {
+            return /** @type {IsFilter extends true ? Tags : Tag|undefined} */ (
+              left[leftIndex]
+            )
           }
-        }
 
-        left = next
+          matches.push(left[leftIndex])
+        } else {
+          next.push(left[leftIndex])
+        }
       }
 
-      // If this is a filter, return the list.  If it’s a lookup, we didn’t find
-      // a match, so return `undefined`.
-
-      return /** @type {FilterOrLookupResponse<IsFilter>} */ (filter ? matches : undefined);
+      left = next
     }
 
-  /** @type {FilterOrLookup<IsFilter>} */
-  return match;
+    // If this is a filter, return the list.  If it’s a lookup, we didn’t find
+    // a match, so return `undefined`.
+    return /** @type {IsFilter extends true ? Tags : Tag|undefined} */ (
+      filter ? matches : undefined
+    )
+  }
 }
 
 /**
  * Basic Filtering (Section 3.3.1) matches a language priority list consisting
  * of basic language ranges (Section 2.1) to sets of language tags.
- *
- * @type Filter
  */
-export const basicFilter = factory(
-  /** @type {Check} */
-  function (tag, range) {
-    return range === '*' || tag === range || tag.includes(range + '-')
-  },
-  true
-)
+export const basicFilter = factory(function (tag, range) {
+  return range === '*' || tag === range || tag.includes(range + '-')
+}, true)
 
 /**
  * Extended Filtering (Section 3.3.2) matches a language priority list
  * consisting of extended language ranges (Section 2.2) to sets of language
  * tags.
- *
- * @type Filter
  */
-export const extendedFilter = factory(
-  /** @type {Check} */
-  function (tag, range) {
-    // 3.3.2.1
-    const left = tag.split('-')
-    const right = range.split('-')
-    let leftIndex = 0
-    let rightIndex = 0
+export const extendedFilter = factory(function (tag, range) {
+  // 3.3.2.1
+  const left = tag.split('-')
+  const right = range.split('-')
+  let leftIndex = 0
+  let rightIndex = 0
 
-    // 3.3.2.2
-    if (right[rightIndex] !== '*' && left[leftIndex] !== right[rightIndex]) {
-      return false
+  // 3.3.2.2
+  if (right[rightIndex] !== '*' && left[leftIndex] !== right[rightIndex]) {
+    return false
+  }
+
+  leftIndex++
+  rightIndex++
+
+  // 3.3.2.3
+  while (rightIndex < right.length) {
+    // 3.3.2.3.A
+    if (right[rightIndex] === '*') {
+      rightIndex++
+      continue
     }
 
-    leftIndex++
-    rightIndex++
+    // 3.3.2.3.B
+    if (!left[leftIndex]) return false
 
-    // 3.3.2.3
-    while (rightIndex < right.length) {
-      // 3.3.2.3.A
-      if (right[rightIndex] === '*') {
-        rightIndex++
-        continue
-      }
-
-      // 3.3.2.3.B
-      if (!left[leftIndex]) return false
-
-      // 3.3.2.3.C
-      if (left[leftIndex] === right[rightIndex]) {
-        leftIndex++
-        rightIndex++
-        continue
-      }
-
-      // 3.3.2.3.D
-      if (left[leftIndex].length === 1) return false
-
-      // 3.3.2.3.E
+    // 3.3.2.3.C
+    if (left[leftIndex] === right[rightIndex]) {
       leftIndex++
+      rightIndex++
+      continue
     }
 
-    // 3.3.2.4
-    return true
-  },
-  true
-)
+    // 3.3.2.3.D
+    if (left[leftIndex].length === 1) return false
+
+    // 3.3.2.3.E
+    leftIndex++
+  }
+
+  // 3.3.2.4
+  return true
+}, true)
 
 /**
  * Lookup (Section 3.4) matches a language priority list consisting of basic
  * language ranges to sets of language tags to find the one exact language tag
  * that best matches the range.
- * @type Lookup
  */
-export const lookup = factory(
-  /** @type {Check} */
-  function (tag, range) {
-    let right = range
+export const lookup = factory(function (tag, range) {
+  let right = range
 
-    /* eslint-disable-next-line no-constant-condition */
-    while (true) {
-      if (right === '*' || tag === right) return true
+  /* eslint-disable-next-line no-constant-condition */
+  while (true) {
+    if (right === '*' || tag === right) return true
 
-      let index = right.lastIndexOf('-')
+    let index = right.lastIndexOf('-')
 
-      if (index < 0) return false
+    if (index < 0) return false
 
-      if (right.charAt(index - 2) === '-') index -= 2
+    if (right.charAt(index - 2) === '-') index -= 2
 
-      right = right.slice(0, index)
-    }
-  },
-  false
-)
+    right = right.slice(0, index)
+  }
+}, false)
 
 /**
  * Validate tags or ranges, and cast them to arrays.

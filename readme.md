@@ -47,17 +47,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install bcp-47-match
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import * as bcp47Match from 'https://cdn.skypack.dev/bcp-47-match@2?dts'
+import * as bcp47Match from 'https://esm.sh/bcp-47-match@2'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import * as bcp47Match from 'https://cdn.skypack.dev/bcp-47-match@2?min'
+  import * as bcp47Match from 'https://esm.sh/bcp-47-match@2?bundle'
 </script>
 ```
 
@@ -293,7 +293,7 @@ See [How to Contribute to Open Source][contribute].
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [license]: license
 

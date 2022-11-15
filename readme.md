@@ -66,7 +66,7 @@ In browsers with [`esm.sh`][esmsh]:
 ```js
 import {basicFilter, extendedFilter, lookup} from 'bcp-47-match'
 
-var tags = ['en-GB', 'de-CH', 'en', 'de']
+const tags = ['en-GB', 'de-CH', 'en', 'de']
 
 console.log(basicFilter(tags, '*')) // => [ 'en-GB', 'de-CH', 'en', 'de' ]
 console.log(basicFilter(tags, 'en')) // => [ 'en-GB', 'en' ]

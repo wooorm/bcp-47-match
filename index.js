@@ -1,46 +1,73 @@
 /**
  * See <https://tools.ietf.org/html/rfc4647#section-3.1>
- * for more information on the algorithms.
+ * for more info on the algorithms.
  */
 
 /**
  * @typedef {string} Tag
+ *   BCP-47 tag.
  * @typedef {Array<Tag>} Tags
+ *   List of BCP-47 tags.
  * @typedef {string} Range
+ *   RFC 4647 range.
  * @typedef {Array<Range>} Ranges
+ *   List of RFC 4647 range.
  *
  * @callback Check
+ *   An internal check.
  * @param {Tag} tag
+ *   BCP-47 tag.
  * @param {Range} range
+ *   RFC 4647 range.
  * @returns {boolean}
+ *   Whether the range matches the tag.
  *
  * @typedef {FilterOrLookup<true>} Filter
+ *   Filter: yields all tags that match a range.
  * @typedef {FilterOrLookup<false>} Lookup
+ *   Lookup: yields the best tag that matches a range.
  */
 
 /**
  * @template {boolean} IsFilter
+ *   Whether to filter or perform a lookup.
  * @callback FilterOrLookup
+ *   A check.
  * @param {Tag|Tags} tags
- * @param {Range|Ranges} [ranges='*']
+ *   One or more BCP-47 tags.
+ * @param {Range|Ranges|undefined} [ranges='*']
+ *   One or more RFC 4647 ranges.
  * @returns {IsFilter extends true ? Tags : Tag|undefined}
+ *   Result.
  */
 
 /**
  * Factory to perform a filter or a lookup.
+ *
  * This factory creates a function that accepts a list of tags and a list of
  * ranges, and contains logic to exit early for lookups.
  * `check` just has to deal with one tag and one range.
  * This match function iterates over ranges, and for each range,
- * iterates over tags.  That way, earlier ranges matching any tag have
- * precedence over later ranges.
+ * iterates over tags.
+ * That way, earlier ranges matching any tag have precedence over later ranges.
  *
  * @template {boolean} IsFilter
  * @param {Check} check
+ *   A check.
  * @param {IsFilter} filter
+ *   Whether to filter or perform a lookup.
  * @returns {FilterOrLookup<IsFilter>}
+ *   Filter or lookup.
  */
 function factory(check, filter) {
+  /**
+   * @param {Tag|Tags} tags
+   *   One or more BCP-47 tags.
+   * @param {Range|Ranges|undefined} [ranges='*']
+   *   One or more RFC 4647 ranges.
+   * @returns {IsFilter extends true ? Tags : Tag|undefined}
+   *   Result.
+   */
   return function (tags, ranges) {
     let left = cast(tags, 'tag')
     const right = cast(
@@ -90,6 +117,13 @@ function factory(check, filter) {
 /**
  * Basic Filtering (Section 3.3.1) matches a language priority list consisting
  * of basic language ranges (Section 2.1) to sets of language tags.
+ *
+ * @param {Tag|Tags} tags
+ *   One or more BCP-47 tags.
+ * @param {Range|Ranges|undefined} [ranges='*']
+ *   One or more RFC 4647 ranges.
+ * @returns {Tags}
+ *   List of BCP-47 tags.
  */
 export const basicFilter = factory(function (tag, range) {
   return range === '*' || tag === range || tag.includes(range + '-')
@@ -99,6 +133,13 @@ export const basicFilter = factory(function (tag, range) {
  * Extended Filtering (Section 3.3.2) matches a language priority list
  * consisting of extended language ranges (Section 2.2) to sets of language
  * tags.
+ *
+ * @param {Tag|Tags} tags
+ *   One or more BCP-47 tags.
+ * @param {Range|Ranges|undefined} [ranges='*']
+ *   One or more RFC 4647 ranges.
+ * @returns {Tags}
+ *   List of BCP-47 tags.
  */
 export const extendedFilter = factory(function (tag, range) {
   // 3.3.2.1
@@ -148,6 +189,13 @@ export const extendedFilter = factory(function (tag, range) {
  * Lookup (Section 3.4) matches a language priority list consisting of basic
  * language ranges to sets of language tags to find the one exact language tag
  * that best matches the range.
+ *
+ * @param {Tag|Tags} tags
+ *   One or more BCP-47 tags.
+ * @param {Range|Ranges|undefined} [ranges='*']
+ *   One or more RFC 4647 ranges.
+ * @returns {Tag|undefined}
+ *   BCP-47 tag.
  */
 export const lookup = factory(function (tag, range) {
   let right = range

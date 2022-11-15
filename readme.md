@@ -41,7 +41,7 @@ language tags.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
+In Node.js (version 14.14+, 16.0+), install with [npm][]:
 
 ```sh
 npm install bcp-47-match
@@ -90,8 +90,8 @@ console.log(lookup(tags, 'jp')) // => undefined
 
 ## API
 
-This package exports the following identifiers: `basicFilter`, `extendedFilter`,
-and `lookup`.
+This package exports the identifier `basicFilter`, `extendedFilter`, and
+`lookup`.
 There is no default export.
 
 ### `basicFilter(tags[, ranges='*'])`
@@ -132,7 +132,7 @@ Returns a list of matching tags in the order they matched.
 
 *   `tags` (`string` or `Array<string>`)
     — list of BCP 47 tags
-*   `ranges` (`string` or `Array<string>`)
+*   `ranges` (`string` or `Array<string>`, default: `'*'`)
     — list of RFC 4647
     [basic ranges][basic-range]
     (aka, matching `/^(\*|[a-z]{1,8}(-[a-z0-9]{1,8})*)$/i`)
@@ -179,7 +179,7 @@ with further ranges.
 
 *   `tags` (`string` or `Array<string>`)
     — list of BCP 47 tags
-*   `ranges` (`string` or `Array<string>`)
+*   `ranges` (`string` or `Array<string>`, default: `'*'`)
     — list of RFC 4647 [extended ranges][extended-range]
     (aka, matching `/^(\*|[a-z]{1,8})(-(\*|[a-z0-9]{1,8}))*$/i`)
 
@@ -236,11 +236,12 @@ First matching tag in `tags`, `undefined` otherwise (`string?`).
 ## Types
 
 This package is fully typed with [TypeScript][].
+It exports no additional types.
 
 ## Compatibility
 
 This package is at least compatible with all maintained versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 It also works in Deno and modern browsers.
 
 ## Security

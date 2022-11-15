@@ -1,5 +1,4 @@
 /**
- * @typedef {import('tape').Test} Test
  * @typedef {import('./index.js').Filter} Filter
  * @typedef {import('./index.js').Lookup} Lookup
  */

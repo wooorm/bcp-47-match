@@ -4,11 +4,12 @@
  * @typedef {import('./index.js').Lookup} Lookup
  */
 
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import chalk from 'chalk'
 import {basicFilter, extendedFilter, lookup} from './index.js'
 
-test('basicFilter(tags[, ranges="*"])', function (t) {
+test('basicFilter(tags[, ranges="*"])', function () {
   /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const basics = [
     ['de-de', undefined, ['de-de']],
@@ -59,10 +60,10 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
   let index = -1
 
   while (++index < basics.length) {
-    check(t, basicFilter, basics[index])
+    check(basicFilter, basics[index])
   }
 
-  t.throws(
+  assert.throws(
     function () {
       // @ts-expect-error runtime
       basicFilter()
@@ -71,7 +72,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
     'should throw without tag'
   )
 
-  t.throws(
+  assert.throws(
     function () {
       basicFilter('')
     },
@@ -79,7 +80,7 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
     'should throw with empty string tag'
   )
 
-  t.throws(
+  assert.throws(
     function () {
       // @ts-expect-error runtime
       basicFilter(1)
@@ -87,11 +88,9 @@ test('basicFilter(tags[, ranges="*"])', function (t) {
     /^Error: Invalid tag `1`, expected non-empty string$/,
     'should throw with invalid tag'
   )
-
-  t.end()
 })
 
-test('extendedFilter(tags[, ranges="*""])', function (t) {
+test('extendedFilter(tags[, ranges="*""])', function () {
   /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const extendeds = [
     ['de-de', undefined, ['de-de']],
@@ -162,10 +161,10 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
   let index = -1
 
   while (++index < extendeds.length) {
-    check(t, extendedFilter, extendeds[index])
+    check(extendedFilter, extendeds[index])
   }
 
-  t.throws(
+  assert.throws(
     function () {
       // @ts-expect-error runtime
       extendedFilter()
@@ -174,7 +173,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
     'should throw without tag'
   )
 
-  t.throws(
+  assert.throws(
     function () {
       extendedFilter('')
     },
@@ -182,7 +181,7 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
     'should throw with empty string tag'
   )
 
-  t.throws(
+  assert.throws(
     function () {
       // @ts-expect-error runtime
       extendedFilter(1)
@@ -190,11 +189,9 @@ test('extendedFilter(tags[, ranges="*""])', function (t) {
     /^Error: Invalid tag `1`, expected non-empty string$/,
     'should throw with invalid tag'
   )
-
-  t.end()
 })
 
-test('lookup(tags[, ranges="*"])', function (t) {
+test('lookup(tags[, ranges="*"])', function () {
   /** @type {Array<[string|string[], string|string[]|undefined, unknown]>} */
   const lookups = [
     // Wildcards have no effect in `lookup`
@@ -231,19 +228,16 @@ test('lookup(tags[, ranges="*"])', function (t) {
   let index = -1
 
   while (++index < lookups.length) {
-    check(t, lookup, lookups[index])
+    check(lookup, lookups[index])
   }
-
-  t.end()
 })
 
 /**
- * @param {Test} t
  * @param {Filter|Lookup} fn
  * @param {[string|string[], string|string[]|undefined, unknown]} options
  */
-function check(t, fn, options) {
-  t.deepEqual(
+function check(fn, options) {
+  assert.deepEqual(
     fn(options[0], options[1]),
     options[2],
     'f(' +

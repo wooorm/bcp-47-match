@@ -126,7 +126,7 @@ function factory(check, filter) {
  *   List of BCP-47 tags.
  */
 export const basicFilter = factory(function (tag, range) {
-  return range === '*' || tag === range || tag.includes(range + '-')
+  return range === '*' || tag === range || tag.startsWith(range + '-')
 }, true)
 
 /**

@@ -33,6 +33,12 @@ test('basicFilter(tags[, ranges="*"])', function () {
     ['de-CH-1996', 'de-CH', ['de-CH-1996']],
     ['nb', 'no', []],
     ['zh-Hans', 'zh-CN', []],
+    ['sgn-DE-CH', 'de', []],
+    ['de-CH-1996', 'ch', []],
+    ['de-CH-1996', 'ch-1996', []],
+    ['en-US-x-twain', 'us', []],
+    ['zh-min-nan', 'min', []],
+    [['de-CH', 'sgn-DE-CH', 'gsw-CH'], 'de', ['de-CH']],
     [['de-de', 'de', 'en-GB', 'en'], 'de', ['de-de', 'de']],
     [['de-de', 'de', 'en-GB', 'en'], 'en', ['en-GB', 'en']],
     [
